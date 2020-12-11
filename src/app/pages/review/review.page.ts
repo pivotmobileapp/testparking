@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-review',
@@ -8,39 +9,38 @@ import { ApiService } from 'src/app/service/api.service';
   styleUrls: ['./review.page.scss'],
 })
 export class ReviewPage implements OnInit {
-  reviewData = [];
-  search = ''
-  constructor(private api: ApiService) { }
+  rate = 0;
+  id: string;
+  msg: any;
+  constructor(private api: ApiService, public activeRoute: ActivatedRoute, private ntrl: NavController) {
+
+  }
 
   ngOnInit() {
+    this.id = this.activeRoute.snapshot.paramMap.get('id');
+    console.log('this.id', this.id);
+
+  }
+  addReview() {
     this.api.startLoader();
-
-    const id = localStorage.getItem('defaultParking');
-    const type = localStorage.getItem('userType') || 'owner';
-    if (type === 'owner') {
-      this.api.authGetReq('review').subscribe((res: any) => {
-        this.reviewData = res.data;
+    console.log('rate', this.rate);
+    const data = {
+      space_id: this.id,
+      star: this.rate,
+      description: this.msg,
+    };
+    this.api.authPostReq('review', data).subscribe((res: any) => {
+      console.log('res', res)
+      if (res.success === true) {
+        this.api.presentToast(res.msg)
         this.api.dismissLoader();
+        this.ntrl.back();
+      }
+    }, err => {
+      console.log('err', err)
+      this.api.dismissLoader();
 
-      }, err => {
-        this.api.dismissLoader();
-
-        console.error('err', err);
-
-      });
-    } else {
-      this.api.authGetReq('review/' + id).subscribe((res: any) => {
-
-        this.reviewData = res.data;
-        this.api.dismissLoader();
-        console.log('err', res);
-      }, err => {
-        console.error('err', err);
-        this.api.dismissLoader();
-
-      });
-    }
-
+    });
   }
 
 }

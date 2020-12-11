@@ -1,7 +1,8 @@
 {
-  "name": "PayParkOwner",
+  "name": "paypark",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

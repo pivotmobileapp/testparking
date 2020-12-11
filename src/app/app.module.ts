@@ -1,44 +1,40 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { HttpClientModule } from '@angular/common/http';
-
-import { AppComponent } from './app.component';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { DeleteModalPageModule } from './pages/delete-modal/delete-modal.module';
-import { SpaceHeaderComponent } from './pages/space-header/space-header.component';
-import { Stripe } from '@ionic-native/stripe/ngx';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { PopoverPageModule } from './pages/popover/popover.module';
+
+import { HttpClientModule } from '@angular/common/http';
+import { IonBottomDrawerModule } from 'ion-bottom-drawer';
+
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     DeleteModalPageModule,
+    PopoverPageModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    IonBottomDrawerModule,
+    Ng2SearchPipeModule
 
-  ],
-  exports: [
-
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [
+    Geolocation,
     StatusBar,
+    LocalNotifications,
     SplashScreen,
-    AndroidPermissions,
-    Stripe,
+    OneSignal,
     Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

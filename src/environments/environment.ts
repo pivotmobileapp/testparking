@@ -5,7 +5,6 @@
 export const environment = {
   production: false
 };
-export const ENDPOINT_URL = 'http://your-url/api/';
 
 /*
  * For easier debugging in development mode, you can import the following file

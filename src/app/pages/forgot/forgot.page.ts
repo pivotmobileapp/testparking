@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { ApiService } from 'src/app/service/api.service';
 
 @Component({
   selector: 'app-forgot',
@@ -8,25 +7,40 @@ import { ApiService } from 'src/app/service/api.service';
   styleUrls: ['./forgot.page.scss'],
 })
 export class ForgotPage implements OnInit {
-  data:any = {};
-  constructor(private ntrl:NavController, private api: ApiService) { }
+
+  step1 = true;
+  step2 = false;
+  step3 = false;
+  constructor(private ntrl: NavController) { }
 
   ngOnInit() {
   }
-  login(){
-    const data = {
-      email: this.data.email
-    };
-    this.api.forgotPsw(data).subscribe((res: any) => {
-      if(res.success){
-        this.api.presentToast(res.msg);
-        this.ntrl.navigateForward(['login']);
-      } else {
-        this.api.presentToast(res.msg);
-      }
-    }, err => {
-      console.log('err ', err);
-    })
-    //
+  backPage() {
+    this.ntrl.back();
+  }
+  signIn() {
+    this.ntrl.navigateForward(['login']);
+  }
+  findUser() {
+    this.step1 = false;
+    this.step2 = true;
+    this.step3 = false;
+  }
+  verifyUser() {
+    this.step1 = false;
+    this.step2 = false;
+    this.step3 = true;
+
+  }
+  changePassword() {
+
+    this.step1 = false;
+    this.step2 = false;
+    this.step3 = false;
+  }
+  editInformation() {
+    this.step1 = true;
+    this.step2 = false;
+    this.step3 = false;
   }
 }

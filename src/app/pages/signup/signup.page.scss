@@ -23,15 +23,16 @@ ion-content {
             font-size: 30px;
             font-family: 'WorkSans_Bold';
             color: var(--ion-color-darkblue);
-
         }
+
 
     }
 
-    form {
+    .form {
         padding-left: 16px;
         padding-right: 16px;
         padding-top: 10px;
+
 
         .item_div {
             --padding-start: 0px;
@@ -98,7 +99,6 @@ ion-content {
             --border-radius: 25px;
             margin-top: 30px;
             height: 46px;
-            --box-shadow: none;
         }
     }
 
@@ -216,6 +216,7 @@ ion-content {
 
         .twitter {
             --background: var(--ion-color-twiter-btn);
+
 
             ion-icon {
                 width: 14px;

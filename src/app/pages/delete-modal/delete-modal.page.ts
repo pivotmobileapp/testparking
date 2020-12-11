@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { modalController } from '@ionic/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ApiService } from './../../service/api.service';
 
 @Component({
   selector: 'app-delete-modal',
@@ -8,13 +8,30 @@ import { modalController } from '@ionic/core';
   styleUrls: ['./delete-modal.page.scss'],
 })
 export class DeleteModalPage implements OnInit {
-
-  constructor(private ntrl:NavController) { }
+  @Input() id: string;
+  @Input() path: string;
+  constructor(private modelDismiss: ModalController, private api: ApiService) { }
 
   ngOnInit() {
   }
-  cancelBtn(){
-    modalController.dismiss();
-      this.ntrl.navigateForward(['transaction'])
+  cancelBtn() {
+    this.modelDismiss.dismiss({
+      deleted: false
+    });
+  }
+  deleteRecord() {
+    this.api.authDeleteReq(this.path + '/' + this.id).subscribe((res: any) => {
+      console.log('res', res)
+      if (res.success === true) {
+        this.api.presentToast(res.msg)
+        this.modelDismiss.dismiss({
+          deleted: true
+        });
+
+      }
+    }, err => {
+      console.log('err', err)
+
+    })
   }
 }

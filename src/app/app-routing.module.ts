@@ -1,110 +1,40 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { SpaceHeaderComponent } from './pages/space-header/space-header.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
+  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
+  { path: 'get-otp', loadChildren: './pages/get-otp/get-otp.module#GetOtpPageModule' },
+  { path: 'verify', loadChildren: './pages/verify/verify.module#VerifyPageModule' },
+  { path: 'all-parking', loadChildren: './pages/all-parking/all-parking.module#AllParkingPageModule' },
+  { path: 'park-time/:id', loadChildren: './pages/park-time/park-time.module#ParkTimePageModule' },
+  { path: 'select-car', loadChildren: './pages/select-car/select-car.module#SelectCarPageModule' },
+  { path: 'add-card', loadChildren: './pages/add-card/add-card.module#AddCardPageModule' },
+  { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule' },
+  { path: 'policy', loadChildren: './pages/policy/policy.module#PolicyPageModule' },
+  { path: 'review/:id', loadChildren: './pages/review/review.module#ReviewPageModule' },
+  { path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule' },
+  { path: 'cancel-booking', loadChildren: './pages/cancel-booking/cancel-booking.module#CancelBookingPageModule' },
+  { path: 'parking-detail/:id', loadChildren: './pages/parking-detail/parking-detail.module#ParkingDetailPageModule' },
+  { path: 'ticket/:id', loadChildren: './pages/ticket/ticket.module#TicketPageModule' },
+  { path: 'car-list', loadChildren: './pages/car-list/car-list.module#CarListPageModule' },
+  { path: 'delete-modal', loadChildren: './pages/delete-modal/delete-modal.module#DeleteModalPageModule' },
+  { path: 'rebook', loadChildren: './pages/rebook/rebook.module#RebookPageModule' },
+  { path: 'popover', loadChildren: './pages/popover/popover.module#PopoverPageModule' },
+  { path: 'forgot', loadChildren: './pages/forgot/forgot.module#ForgotPageModule' },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
-  },
-  {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
-  },
-  {
-    path: 'signup',
-    loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
-  },
-  {
-    path: 'slide',
-    loadChildren: () => import('./pages/slide/slide.module').then(m => m.SlidePageModule)
-  },
-  {
-    path: 'owner-detail',
-    loadChildren: () => import('./pages/owner-detail/owner-detail.module').then(m => m.OwnerDetailPageModule)
-  },
-  {
-    path: 'park-address',
-    loadChildren: () => import('./pages/park-address/park-address.module').then(m => m.ParkAddressPageModule)
-  },
-  {
-    path: 'park-guard',
-    loadChildren: () => import('./pages/park-guard/park-guard.module').then(m => m.ParkGuardPageModule)
-  },
-  {
-    path: 'guard-list',
-    loadChildren: () => import('./pages/guard-list/guard-list.module').then(m => m.GuardListPageModule)
-  },
-  {
-    path: 'transaction',
-    loadChildren: () => import('./pages/transaction/transaction.module').then(m => m.TransactionPageModule)
-  },
-  {
-    path: 'scanner',
-    loadChildren: () => import('./pages/scanner/scanner.module').then(m => m.ScannerPageModule)
-  },
-  {
-    path: 'scanner/:id',
-    loadChildren: () => import('./pages/scanner/scanner.module').then(m => m.ScannerPageModule)
-  },
-  {
-    path: 'review',
-    loadChildren: () => import('./pages/review/review.module').then(m => m.ReviewPageModule)
-  },
-  {
-    path: 'setting',
-    loadChildren: () => import('./pages/setting/setting.module').then(m => m.SettingPageModule)
-  },
-  {
-    path: 'forgot',
-    loadChildren: () => import('./pages/forgot/forgot.module').then(m => m.ForgotPageModule)
-  },
-  {
-    path: 'delete-modal',
-    loadChildren: () => import('./pages/delete-modal/delete-modal.module').then(m => m.DeleteModalPageModule)
-  },
-  {
-    path: 'home-map',
-    loadChildren: () => import('./pages/home-map/home-map.module').then(m => m.HomeMapPageModule)
-  },
-  {
-    path: 'edit-space',
-    loadChildren: () => import('./pages/edit-space/edit-space.module').then(m => m.EditSpacePageModule)
-  },
-  {
-    path: 'zone-edit',
-    loadChildren: () => import('./pages/zone-edit/zone-edit.module').then( m => m.ZoneEditPageModule)
-  },
-  {
-    path: 'live-parking',
-    loadChildren: () => import('./pages/live-parking/live-parking.module').then( m => m.LiveParkingPageModule)
-  },
-  {
-    path: 'plan-detail',
-    loadChildren: () => import('./pages/plan-detail/plan-detail.module').then( m => m.PlanDetailPageModule)
-  },
-  {
-    path: 'images',
-    loadChildren: () => import('./pages/images/images.module').then( m => m.ImagesPageModule)
-  },
-
+    path: 'space-slot/:id',
+    loadChildren: () => import('./pages/space-slot/space-slot.module').then(m => m.SpaceSlotPageModule)
+  }
 ];
-
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
-  declarations: [],
-
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

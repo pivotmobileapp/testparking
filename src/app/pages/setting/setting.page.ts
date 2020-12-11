@@ -1,57 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './../../service/api.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.page.html',
-  styleUrls: ['./setting.page.scss']
+  styleUrls: ['./setting.page.scss'],
 })
 export class SettingPage implements OnInit {
-  profileData: any = {};
-  error: any = {};
-  constructor(private api: ApiService) {
-    this.profileInitData();
-  }
-
-  private profileInitData() {
-    this.api.startLoader();
-    this.api.authGetReq('profile').subscribe(
-      res => {
-        this.profileData = res;
-        this.api.dismissLoader();
+  data: any = {
+    setting: [
+      {
+        name: 'Phone Number',
+        value: '+44 9033976754'
       },
-      err => {
-        this.api.dismissLoader();
-        console.error('err', err);
+      {
+        name: 'Notification'
+      },
+      {
+        name: 'location',
+        toggle: 'yes'
+      },
+      {
+        name: 'Car/Card Saved List'
+      },
+      {
+        name: 'Privacy Policy'
+      },
+      {
+        name: 'Sign out'
       }
-    );
+    ]
   }
-  ngOnInit() {}
-  update() {
-    this.api.startLoader();
-    this.api
-      .authPostReq('profile/setting', {
-        stripe_sk: this.profileData.stripe_sk,
-        stripe_pk: this.profileData.stripe_pk
-      })
-      .subscribe(
-        (res: any) => {
-          this.api.dismissLoader();
+  constructor(private ntrl: NavController) { }
 
-          if (res.success === true) {
-            this.api.presentToast(res.msg);
-          }
-          this.error = {};
-        },
-        err => {
-          this.api.dismissLoader();
-
-          if (err.status === 422) {
-            this.error = err.error.errors;
-            console.log('err', this.error);
-            this.api.presentToast(err.error.message);
-          }
-        }
-      );
+  ngOnInit() {
+  }
+  back() {
+    this.ntrl.back();
+  }
+  notification() {
+    this.ntrl.navigateForward(['notification']);
+  }
+  carList() {
+    this.ntrl.navigateForward(['car-list']);
+  }
+  privacyPolicy() {
+    this.ntrl.navigateForward(['policy']);
+  }
+  signOut() {
+    localStorage.clear();
+    this.ntrl.navigateForward(['login']);
   }
 }
